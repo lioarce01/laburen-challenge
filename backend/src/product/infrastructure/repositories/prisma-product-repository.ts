@@ -1,0 +1,38 @@
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'prisma/prisma.service';
+import { Product } from 'src/product/domain/entities/product.entity';
+import { IProductRepository } from 'src/product/domain/repository/product.repository';
+
+@Injectable()
+export class PrismaProductRepository implements IProductRepository {
+  constructor(private prisma: PrismaService) {}
+  async findAll(query?: string): Promise<Product[]> {
+    const where = query
+      ? {
+          OR: [
+            { name: { contains: query, mode: Prisma.QueryMode.insensitive } },
+            {
+              description: {
+                contains: query,
+                mode: Prisma.QueryMode.insensitive,
+              },
+            },
+          ],
+        }
+      : {};
+
+    const products = await this.prisma.product.findMany({ where });
+
+    return products.map(
+      (p: Product) =>
+        new Product(p.id, p.name, p.description ?? '', p.price, p.stock),
+    );
+  }
+  async findById(id: number): Promise<Product | null> {
+    const p = await this.prisma.product.findUnique({ where: { id } });
+    return p
+      ? new Product(p.id, p.name, p.description ?? '', p.price, p.stock)
+      : null;
+  }
+}
