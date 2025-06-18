@@ -1,27 +1,27 @@
-# Iniciar el Proyecto en Local
+# Running the Project Locally
 
-Este documento explica cómo levantar cada parte del proyecto en tu entorno local. Asegúrate de clonar el repositorio y tener instaladas las dependencias necesarias.
+This document explains how to run each part of the project in your local environment. Make sure to clone the repository and install the necessary dependencies.
 
 ---
 
 ## 1. Frontend (Next.js)
 
-### Comandos:
+### Commands:
 
 ```bash
 npm install
 npm run dev
 ```
 
-### Configuración:
+### Configuration:
 
-* Copiar el archivo `.env.example` a `.env.local`:
+* Copy the `.env.example` file to `.env.local`:
 
 ```bash
 cp .env.example .env.local
 ```
 
-* Completar la variable de entorno:
+* Fill in the environment variable:
 
   * `AGENT_API_URL=http://localhost:8000`
 
@@ -29,58 +29,58 @@ cp .env.example .env.local
 
 ## 2. Backend (API REST con NestJS)
 
-### Comandos:
+### Commands:
 
 ```bash
 npm install
 npm run start:dev
 ```
 
-### Configuración:
+### Configuration:
 
-* Copiar el archivo `.env.example` a `.env`:
+* Copy the `.env.example` file to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-* Completar las siguientes variables:
+* Fill in the following variables:
 
   * `DATABASE_URL=postgresql://usuario:password@localhost:5432/db_name`
   * `PORT=3001`
 
-### Cargar datos iniciales:
+### Load initial data:
 
 ```bash
 npm run prisma:seed
 ```
 
-(Revisa el archivo `prisma/seed.ts` para ver qué productos se insertan)
+(Check the `prisma/seed.ts` file to see which products are inserted)
 
 ---
 
-## 3. Agente de IA (Python + FastAPI)
+## 3. AI Agent (Python + FastAPI)
 
-### Comando:
+### Command:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-### Configuración:
+### Configuration:
 
-* Copiar `.env.example` a `.env`:
+* Copy the `.env.example` file to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-* Completar las variables necesarias:
+* Fill in the required variables:
 
-  * `GOOGLE_API_KEY=` (para Gemini)
-  * `OPENAI_API_KEY=` (opcional, si usas OpenAI)
-  * `API_URL=http://localhost:3001` (URL de la API REST del backend)
+  * `GOOGLE_API_KEY=` (Gemini)
+  * `OPENAI_API_KEY=` (optional, OpenAI)
+  * `API_URL=http://localhost:3001` (URL of the backend REST API)
 
 ---
 
-Cada módulo del proyecto contiene un archivo `.env.example` como plantilla. Solo debes duplicarlo y rellenar tus valores.
+Each module of the project includes a `.env.example` file as a template. Just duplicate it and fill in your values.
