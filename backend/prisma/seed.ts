@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const workbook = XLSX.readFile('products.xlsx');
+  const workbook = XLSX.readFile('prisma/products.xlsx');
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows: any[] = XLSX.utils.sheet_to_json(sheet);
   const sample = rows.slice(0, Math.ceil(rows.length * 0.1)); // only 10% of the excel data

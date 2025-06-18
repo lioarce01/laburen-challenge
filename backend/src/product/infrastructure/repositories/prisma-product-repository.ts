@@ -6,29 +6,33 @@ import { IProductRepository } from 'src/product/domain/repository/product.reposi
 
 @Injectable()
 export class PrismaProductRepository implements IProductRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
+
   async findAll(query?: string): Promise<Product[]> {
-    const where = query
-      ? {
-          OR: [
-            { name: { contains: query, mode: Prisma.QueryMode.insensitive } },
-            {
-              description: {
-                contains: query,
-                mode: Prisma.QueryMode.insensitive,
-              },
-            },
-          ],
-        }
-      : {};
+    if (!query) {
+      // Si no hay query, devolvemos todos los productos con findMany()
+      const products = await this.prisma.product.findMany();
+      return products.map(
+        (p) => new Product(p.id, p.name, p.description ?? '', p.price, p.stock),
+      );
+    }
 
-    const products = await this.prisma.product.findMany({ where });
+    const search = `%${query}%`;
 
-    return products.map(
-      (p: Product) =>
-        new Product(p.id, p.name, p.description ?? '', p.price, p.stock),
+    const rawProducts = await this.prisma.$queryRaw<
+      Array<{ id: number; name: string; description: string; price: number; stock: number }>
+    >(Prisma.sql`
+    SELECT id, name, description, price, stock
+    FROM "Product"
+    WHERE unaccent(name) ILIKE unaccent(${search})
+       OR unaccent(description) ILIKE unaccent(${search})
+  `);
+
+    return rawProducts.map(
+      (p) => new Product(p.id, p.name, p.description ?? '', p.price, p.stock),
     );
   }
+
   async findById(id: number): Promise<Product | null> {
     const p = await this.prisma.product.findUnique({ where: { id } });
     return p
