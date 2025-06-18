@@ -36,10 +36,10 @@ class AgentService:
             if len(products) == 1:
                 p = products[0]
                 response_text = (
-                    f"**Product:** {p['name']}\n"
-                    f"**Price:** ${p['price']}\n"
-                    f"**Stock:** {p['stock']} units\n"
-                    f"**Description:** {p.get('description', 'Not available')}\n"
+                    f"Product: {p['name']}\n"
+                    f"Price: ${p['price']}\n"
+                    f"Stock: {p['stock']} units\n"
+                    f"Description: {p.get('description', 'Not available')}\n"
                 )
             elif len(products) > 1:
                 names = ", ".join(p["name"] for p in products)
@@ -50,7 +50,11 @@ class AgentService:
         elif intent == "get_products":
             products = await self.nest.get_products()
             names = ", ".join(p["name"] for p in products)
-            response_text = f"Available products: {names}"
+            response_text = (
+                f"Here are the available products:\n"
+                f"{names}\n"
+                f"You can ask for details about a specific product or add one to your cart."
+            )   
 
         elif intent == "add_to_cart":
             if not product_id and product_name:

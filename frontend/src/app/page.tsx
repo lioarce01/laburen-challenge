@@ -55,7 +55,7 @@ export default function Chat() {
     <div className="max-w-md mx-auto mt-10 font-sans flex flex-col h-[600px]">
       <h1 className="text-2xl font-bold mb-4 text-center">Chat with AI</h1>
 
-      <div className="flex-1 bg-gray-100 p-4 rounded-lg overflow-y-auto shadow-md">
+      <div className="flex-1 bg-gray-100 p-4 rounded-lg overflow-y-auto shadow-md whitespace-pre-wrap">
         {messages.map((msg, idx) => (
           <div
             key={idx}
