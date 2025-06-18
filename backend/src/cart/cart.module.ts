@@ -5,6 +5,8 @@ import { ICartRepository } from './domain/repository/cart.repository';
 import { PrismaCartRepository } from './infrastructure/repositories/prisma-cart.repository';
 import { PrismaModule } from 'prisma/prisma.module';
 import { CreateCartUseCase } from './application/usecases/create-cart.usecase';
+import { IProductRepository } from 'src/product/domain/repository/product.repository';
+import { PrismaProductRepository } from 'src/product/infrastructure/repositories/prisma-product-repository';
 
 @Module({
   imports: [PrismaModule],
@@ -13,6 +15,7 @@ import { CreateCartUseCase } from './application/usecases/create-cart.usecase';
     UpdateCartUseCase,
     CreateCartUseCase,
     { provide: ICartRepository, useClass: PrismaCartRepository },
+    { provide: IProductRepository, useClass: PrismaProductRepository },
   ],
 })
 export class CartModule { }
