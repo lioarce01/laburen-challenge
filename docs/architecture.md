@@ -75,7 +75,7 @@ Este documento describe la arquitectura general del sistema implementado para el
 
 ---
 
-## Diagrama General (Ver imagen `architecture.png`)
+## Diagrama General
 
 ```
 [Frontend Chat UI] → [/api/chat] → [Agente IA] → [NestJS API] → [Supabase DB]
