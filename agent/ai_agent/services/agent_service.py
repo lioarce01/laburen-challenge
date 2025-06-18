@@ -70,7 +70,7 @@ class AgentService:
                         self.cart_id = cart['id']
                         response_text = (
                             f"A new cart has been created.\n"
-                            f"🛒 Product added:\n"
+                            f"Product added:\n"
                             f"- Name: {product['name']}\n"
                             f"- Quantity: {quantity}\n"
                             f"- Unit Price: ${product['price']}\n"
