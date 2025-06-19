@@ -37,7 +37,7 @@ This document describes the overall architecture of the system implemented for t
 * **Endpoints**:
   * `GET /products`  
   * `GET /products/:id`  
-  * `GET /carts/:id`
+  * `GET /carts/:id` (User now can ask to ai agent to show the current cart)
   * `POST /carts`
   * `PATCH /carts/:id`
 * **Purpose**: Provide access to product data and cart logic
