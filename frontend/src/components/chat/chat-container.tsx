@@ -26,9 +26,13 @@ export function ChatContainer({
 }: ChatContainerProps) {
   return (
     <div
-      className={`rounded-3xl shadow-xl overflow-hidden transition-colors duration-300 ${isDark ? "bg-gray-950 border border-gray-800" : "bg-white"
-        }`}
+      className={`rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 backdrop-blur-xl ${isDark
+        ? "bg-slate-900/90 border border-slate-700/50 shadow-slate-900/50"
+        : "bg-white/95 border border-white/50 shadow-purple-500/10"
+        } hover:shadow-3xl transform hover:scale-[1.01]`}
     >
+      <div className="h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500" />
+
       <MessageList messages={messages} loading={loading} isDark={isDark} messagesEndRef={messagesEndRef} />
       <ChatInput
         input={input}
