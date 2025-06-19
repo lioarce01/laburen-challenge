@@ -1,6 +1,6 @@
 "use client"
 
-import { Send, Sparkles } from "lucide-react"
+import { Send } from "lucide-react"
 import { CartStatus } from "../cart/cart-status"
 
 interface ChatInputProps {
