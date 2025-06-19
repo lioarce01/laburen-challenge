@@ -19,6 +19,10 @@ class AgentService:
 
         self.llm = GeminiClient(api_key=settings.google_api_key)
         self.nest = NestClient(api_url=str(settings.api_url))
+        
+    async def close(self):
+        await self.llm.close()
+        await self.nest.close()
 
     async def handle_user_message(self, message: str, cart_id: int | None = None) -> dict:
         print(f"🛒 Received cart_id from frontend: {cart_id}")

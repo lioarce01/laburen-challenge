@@ -5,6 +5,10 @@ class NestClient:
     def __init__(self, api_url: str):
         self.api_url = api_url
         self.client = httpx.AsyncClient(base_url=self.api_url, timeout=10.0)
+        
+    async def close(self):
+        """Close the HTTP client"""
+        await self.client.aclose()
 
     async def get_products(self) -> List[Dict]:
         """Get all products from the API"""

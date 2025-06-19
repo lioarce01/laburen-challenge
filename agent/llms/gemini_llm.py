@@ -19,6 +19,10 @@ class GeminiClient(LLMInterface):
     def __init__(self, api_key: str):
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel("gemini-1.5-flash")
+        
+    async def close(self):
+        """Close the LLM client if necessary"""
+        pass
 
     def _detect_intent_sync(self, message: str) -> dict:
         prompt = f"""
