@@ -74,6 +74,23 @@ Replies with updated subtotal
 
 ---
 
+## 4. Get Cart (New Feature)
+**Scenario:** The user want to see what items have in the cart.
+
+```
+User → "Can you show my cart?"
+↓
+Agent detects: get_cart
+↓
+Checks active cart_id
+↓
+Request the cart information → GET /carts/:id
+↓
+Replies with the current cart information
+```
+
+---
+
 ## Considerations
 
 * The agent stores `cart_id` in memory (by prop).
