@@ -23,7 +23,7 @@ export function ChatHeader({ isDark, onThemeToggle }: ChatHeaderProps) {
         Shopping Assistant
       </h1>
       <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-        Hi there! I'm here to help you find and buy amazing products ✨
+        Hi there! I&#39;m here to help you find and buy amazing products ✨
       </p>
     </div>
   )
