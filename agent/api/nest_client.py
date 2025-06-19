@@ -5,6 +5,15 @@ class NestClient:
     def __init__(self, api_url: str):
         self.api_url = api_url
         self.client = httpx.AsyncClient(base_url=self.api_url, timeout=10.0)
+    
+    async def ping(self) -> bool:
+        try:
+            response = await self.client.get("/health")
+            response.raise_for_status()
+            return True
+        except Exception as e:
+            print(f"Ping failed: {e}")
+            return False
         
     async def close(self):
         """Close the HTTP client"""

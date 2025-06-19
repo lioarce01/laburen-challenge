@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+async function pingBackend() {
+  try {
+    const res = await fetch(`${process.env.AGENT_API_URL}/health`)
+    return res.ok
+  } catch (e) {
+    console.error("Ping failed:", e)
+    return false
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { message, cart_id } = await request.json();
+
+    const backendIsUp = await pingBackend()
+    if (!backendIsUp) {
+      console.warn("Backend might be down or cold start")
+      return NextResponse.json({ message: 'Backend is down or cold start', error: 'Backend unavailable' }, { status: 503 });
+    }
 
     console.log("Next.js API received:")
     console.log("Message:", message)

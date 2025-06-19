@@ -26,6 +26,9 @@ class AgentService:
 
     async def handle_user_message(self, message: str, cart_id: int | None = None) -> dict:
         print(f"🛒 Received cart_id from frontend: {cart_id}")
+        
+        if not await self.nest.ping():
+            print("Warning: Backend might be down or cold start")
 
         result = await self.llm.detect_intent(message)
 
