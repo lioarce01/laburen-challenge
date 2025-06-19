@@ -14,10 +14,14 @@ export function useChat() {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to bottom on new message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
+
+  // Debug: Log cuando cambia el cartId
+  useEffect(() => {
+    console.log("🛒 Cart ID changed to:", cartId)
+  }, [cartId])
 
   async function sendMessage() {
     if (!input.trim()) return
@@ -28,20 +32,42 @@ export function useChat() {
     setLoading(true)
 
     try {
+      console.log("📤 Sending request:")
+      console.log("- Message:", userMessage)
+      console.log("- Current cartId:", cartId)
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage, cart_id: cartId }),
       })
 
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+      }
+
       const data = await res.json()
 
-      if (data.cart_id) {
-        setCartId(data.cart_id)
+      console.log("📥 Received response:")
+      console.log("- Response:", data.response)
+      console.log("- Received cart_id:", data.cart_id)
+      console.log("- Previous cart_id:", cartId)
+
+      // Solo actualizar cartId si viene uno válido del backend
+      if (data.cart_id !== undefined && data.cart_id !== null) {
+        if (data.cart_id !== cartId) {
+          console.log(`🔄 Updating cartId from ${cartId} to ${data.cart_id}`)
+          setCartId(data.cart_id)
+        } else {
+          console.log("✅ Cart ID unchanged")
+        }
+      } else {
+        console.log("⚠️ No cart_id in response")
       }
 
       setMessages((prev) => [...prev, { from: "bot", text: data.response }])
-    } catch {
+    } catch (error) {
+      console.error("❌ Error in sendMessage:", error)
       setMessages((prev) => [...prev, { from: "bot", text: "Error connecting to server." }])
     } finally {
       setLoading(false)

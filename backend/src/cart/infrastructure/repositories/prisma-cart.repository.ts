@@ -44,18 +44,24 @@ export class PrismaCartRepository implements ICartRepository {
     cartId: number,
     items: { product_id: number; qty: number }[],
   ): Promise<Cart> {
-    await this.prisma.cartItem.deleteMany({ where: { cart_id: cartId } });
-
-    const updated = await this.prisma.cart.update({
+    const updatedCart = await this.prisma.cart.update({
       where: { id: cartId },
       data: {
         items: {
-          create: items.map((item) => ({
-            product: { connect: { id: item.product_id } },
-            qty: item.qty,
+          upsert: items.map((item) => ({
+            where: {
+              cart_id_product_id: {
+                cart_id: cartId,
+                product_id: item.product_id,
+              },
+            },
+            create: {
+              product: { connect: { id: item.product_id } },
+              qty: item.qty,
+            },
+            update: { qty: item.qty },
           })),
         },
-        updated_at: new Date(),
       },
       include: {
         items: {
@@ -66,6 +72,11 @@ export class PrismaCartRepository implements ICartRepository {
       },
     });
 
-    return updated;
+    return new Cart(
+      updatedCart.id,
+      updatedCart.created_at,
+      updatedCart.updated_at,
+      updatedCart.items
+    );
   }
 }

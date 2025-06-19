@@ -8,7 +8,10 @@ agent = AgentService()
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(payload: ChatRequest):
     agent = AgentService()
-    return await agent.handle_user_message(payload.message)
+    return await agent.handle_user_message(
+        message=payload.message, 
+        cart_id=payload.cart_id
+    )
 
 @app.on_event("shutdown")
 async def shutdown_event():
