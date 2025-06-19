@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Form
+from fastapi.responses import PlainTextResponse
 from ai_agent.services.agent_service import AgentService
 from ai_agent.schemas.chat import ChatRequest, ChatResponse
 
