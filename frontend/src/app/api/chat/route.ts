@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     console.log("Cart ID:", cart_id)
     console.log("Cart ID type:", typeof cart_id)
 
-    const API_URL = process.env.AGENT_API_URL || 'http://localhost:8000';
+    const API_URL = process.env.AGENT_API_URL || 'https://laburen-challenge.onrender.com';
 
     const requestBody = { message, cart_id };
     console.log("Sending to Python agent:", requestBody)
