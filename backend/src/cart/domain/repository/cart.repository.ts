@@ -8,4 +8,5 @@ export interface ICartRepository {
     items: { product_id: number; qty: number }[]
   ): Promise<Cart>;
   createCart(items: { product_id: number, qty: number }[]): Promise<Cart>;
+  getCartById(cartId: number): Promise<Cart | null>;
 }

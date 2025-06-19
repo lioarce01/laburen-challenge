@@ -7,8 +7,21 @@ import { ICartRepository } from 'src/cart/domain/repository/cart.repository';
 export class PrismaCartRepository implements ICartRepository {
   constructor(private prisma: PrismaService) { }
 
-  createCart(items: { product_id: number; qty: number }[]): Promise<Cart> {
-    return this.prisma.cart.create({
+  async getCartById(cartId: number): Promise<Cart | null> {
+    return await this.prisma.cart.findUnique({
+      where: { id: cartId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+  }
+
+  async createCart(items: { product_id: number; qty: number }[]): Promise<Cart> {
+    return await this.prisma.cart.create({
       data: {
         items: {
           create: items.map((item) => ({
