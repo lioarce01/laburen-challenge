@@ -25,6 +25,11 @@ cp .env.example .env.local
 
   * `AGENT_API_URL=http://localhost:8000`
 
+### Public Chat URL:
+```bash
+https://lionel-arce-laburen-challenge.vercel.app/
+```
+
 ---
 
 ## 2. Backend (API REST with NestJS)
@@ -57,6 +62,11 @@ npm run prisma:seed
 
 (Check the `prisma/seed.ts` file to see which products are inserted (only 10% of the data))
 
+### Public Nest APIRest URL:
+```bash
+https://laburen-challenge-1.onrender.com/api
+```
+
 ---
 
 ## 3. AI Agent (Python + FastAPI)
@@ -80,6 +90,11 @@ cp .env.example .env
   * `GOOGLE_API_KEY=` (Gemini)
   * `OPENAI_API_KEY=` (optional, OpenAI)
   * `API_URL=http://localhost:3001` (URL of the backend REST API)
+
+### Public AI Agent URL:
+```bash
+https://laburen-challenge.onrender.com/chat
+```
 
 ---
 

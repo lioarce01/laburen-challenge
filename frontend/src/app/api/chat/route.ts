@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     const backendIsUp = await pingBackend()
     if (!backendIsUp) {
-      console.warn("Backend might be down or cold start")
+      console.warn("Backend might be down or cold start, try again in a few seconds")
       return NextResponse.json({ message: 'Backend is down or cold start', error: 'Backend unavailable' }, { status: 503 });
     }
 
