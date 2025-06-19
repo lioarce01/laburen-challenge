@@ -1,7 +1,7 @@
 import type React from "react"
-import { MessageList } from "./message-list"
+import { MessageList } from "../message/message-list"
 import { ChatInput } from "./chat-input"
-import type { Message } from "../hooks/use-chat"
+import type { Message } from "../../hooks/use-chat"
 
 interface ChatContainerProps {
   messages: Message[]

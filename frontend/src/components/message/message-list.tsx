@@ -1,8 +1,8 @@
 import type React from "react"
+import { EmptyState } from "../common/empty-state"
+import { LoadingIndicator } from "../common/loading-indicator"
+import type { Message as MessageType } from "../../hooks/use-chat"
 import { Message } from "./message"
-import { EmptyState } from "./empty-state"
-import { LoadingIndicator } from "./loading-indicator"
-import type { Message as MessageType } from "../hooks/use-chat"
 
 interface MessageListProps {
   messages: MessageType[]

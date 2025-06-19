@@ -1,7 +1,7 @@
 "use client"
 
 import { Send } from "lucide-react"
-import { CartStatus } from "./cart-status"
+import { CartStatus } from "../cart/cart-status"
 
 interface ChatInputProps {
   input: string
@@ -29,8 +29,8 @@ export function ChatInput({ input, setInput, loading, cartId, isDark, onSendMess
           <input
             type="text"
             className={`w-full rounded-full border-2 px-6 py-3 pr-12 focus:outline-none focus:ring-4 transition-all duration-200 ${isDark
-                ? "bg-gray-900 border-gray-800 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-purple-950"
-                : "bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-purple-400 focus:ring-purple-100"
+              ? "bg-gray-900 border-gray-800 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-purple-950"
+              : "bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-purple-400 focus:ring-purple-100"
               }`}
             placeholder="What can I help you find today?"
             value={input}

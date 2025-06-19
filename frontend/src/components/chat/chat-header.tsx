@@ -1,7 +1,7 @@
 "use client"
 
 import { ShoppingBag } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
+import { ThemeToggle } from "../theme/theme-toggle"
 
 interface ChatHeaderProps {
   isDark: boolean

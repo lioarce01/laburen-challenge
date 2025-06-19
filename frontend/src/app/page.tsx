@@ -1,8 +1,8 @@
 "use client"
-import { ChatHeader } from "../components/chat-header"
-import { ChatContainer } from "../components/chat-container"
+import { ChatContainer } from "../components/chat/chat-container"
 import { useTheme } from "../hooks/use-theme"
 import { useChat } from "../hooks/use-chat"
+import { ChatHeader } from "@/components/chat/chat-header"
 
 export default function Chat() {
   const { isDark, toggleTheme } = useTheme()
