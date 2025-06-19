@@ -37,7 +37,8 @@ This document describes the overall architecture of the system implemented for t
 * **Endpoints**:
   * `GET /products`  
   * `GET /products/:id`  
-  * `POST /carts`  
+  * `GET /carts/:id`
+  * `POST /carts`
   * `PATCH /carts/:id`
 * **Purpose**: Provide access to product data and cart logic
 

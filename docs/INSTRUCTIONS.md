@@ -27,7 +27,7 @@ cp .env.example .env.local
 
 ---
 
-## 2. Backend (API REST con NestJS)
+## 2. Backend (API REST with NestJS)
 
 ### Commands:
 
@@ -55,7 +55,7 @@ cp .env.example .env
 npm run prisma:seed
 ```
 
-(Check the `prisma/seed.ts` file to see which products are inserted)
+(Check the `prisma/seed.ts` file to see which products are inserted (only 10% of the data))
 
 ---
 
