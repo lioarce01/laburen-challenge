@@ -26,44 +26,49 @@ class GeminiClient(LLMInterface):
 
     def _detect_intent_sync(self, message: str) -> dict:
         prompt = f"""
-            You are a smart assistant for an online shopping platform.
+            You are a smart, friendly assistant for an online shopping platform.
 
-            You will receive user messages in Spanish or English.
-            Your task is to detect the user's intent and extract relevant data in a **strict JSON format**.
+            You will receive user messages in Spanish or English. Answer in the same language as the user message.
+            Your task is to detect the user's intent and extract relevant data in a **strict JSON format**, and also provide a humanized, conversational response for the user.
+            
+            Always respond ONLY with valid JSON. No explanations, no markdown, no code blocks.
 
-            Always respond ONLY with valid JSON. No explanations.
+            The JSON must have:
+            - An 'intent' field (see below)
+            - Any relevant fields (like 'product_name', 'items', etc.)
+            - A 'message' field with a friendly, conversational reply for the user, based on their request and your understanding.
 
             ### GENERAL FORMAT
 
-            If the intent is "get_products", respond:
-            {{ "intent": "get_products" }}
+            If the intent is "get_products":
+            {{ "intent": "get_products", "message": "Here are the products you can check out! Let me know if you want details about any of them." }}
 
-            If the intent is "get_product_by_name" or "get_product_by_id", respond:
-            {{ "intent": "get_product_by_name", "product_name": "..." }}
-            {{ "intent": "get_product_by_id", "product_id": "..." }}
+            If the intent is "get_product_by_name" or "get_product_by_id":
+            {{ "intent": "get_product_by_name", "product_name": "...", "message": "Here's what I found for {{product_name}}!" }}
+            {{ "intent": "get_product_by_id", "product_id": "...", "message": "Here's the info for product ID {{product_id}}." }}
 
-            If the intent is "add_to_cart" or "update_cart", respond:
+            If the intent is "add_to_cart" or "update_cart":
             {{
             "intent": "add_to_cart",
             "items": [
                 {{ "product_name": "camiseta", "quantity": 2 }},
                 {{ "product_name": "sudadera", "quantity": 1 }}
-            ]
+            ],
+            "message": "I've added those items to your cart! Anything else you'd like?"
             }}
             
-            If the intent is "get_cart", respond:
-            You must include the cart items in the response
-            {{ "intent": "get_cart", "cart_id": 123, "items": [...] }}
+            If the intent is "get_cart":
+            {{ "intent": "get_cart", "cart_id": 123, "items": [...], "message": "Here's your current cart!" }}
             
-
-            If the intent is unknown, respond:
-            {{ "intent": "unknown" }}
+            If the intent is unknown:
+            {{ "intent": "unknown", "message": "Sorry, I didn't quite get that. Could you rephrase?" }}
 
             ### RULES
 
             - Include only the relevant keys.
             - Use empty strings or zero values if necessary.
             - Always use a list of `items` for add_to_cart or update_cart, even if there's only one item.
+            - The 'message' field should be a friendly, natural language response for the user.
 
             ### EXAMPLES
 
@@ -74,7 +79,8 @@ class GeminiClient(LLMInterface):
             "items": [
                 {{ "product_name": "camiseta", "quantity": 2 }},
                 {{ "product_name": "pantalón", "quantity": 3 }}
-            ]
+            ],
+            "message": "¡Listo! Agregué 2 camisetas y 3 pantalones a tu carrito. ¿Algo más?"
             }}
 
             Message: "Update my cart with 1 t-shirt and 4 hoodies"
@@ -84,18 +90,19 @@ class GeminiClient(LLMInterface):
             "items": [
                 {{ "product_name": "t-shirt", "quantity": 1 }},
                 {{ "product_name": "hoodie", "quantity": 4 }}
-            ]
+            ],
+            "message": "I've updated your cart with 1 t-shirt and 4 hoodies!"
             }}
 
             Message: "Show me all products"
             Response:
-            {{ "intent": "get_products" }}
+            {{ "intent": "get_products", "message": "Here are all the products we have!" }}
 
             Message: "I want info about product ID 123"
             Response:
-            {{ "intent": "get_product_by_id", "product_id": "123" }}
+            {{ "intent": "get_product_by_id", "product_id": "123", "message": "Here's the info for product ID 123." }}
 
-            Now extract the intent and details from this message:
+            Now extract the intent, details, and generate a friendly message for this user message:
             Message: "{message}"
             Response:
             """

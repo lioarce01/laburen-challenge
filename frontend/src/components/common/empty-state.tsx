@@ -27,7 +27,7 @@ export function EmptyState({ isDark }: EmptyStateProps) {
         </h3>
 
         <p className={`text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-          I'm here to help you discover amazing products
+          I&apos;m here to help you discover amazing products
         </p>
 
         <div
